@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.insanedevelopment.controllers</groupId>
+	<artifactId>controller-definition-nsw</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>controller-definition-nsw</name>
+	<description>Classes for Nintendo Switch Controllers</description>
+
+	<properties>
+		<maven.compiler.target>1.11</maven.compiler.target>
+		<maven.compiler.source>1.11</maven.compiler.source>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.insanedevelopment.controllers</groupId>
+			<artifactId>controller-definition-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>5.2.8.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+</project>
