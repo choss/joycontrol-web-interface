@@ -6,13 +6,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.insanedevelopment.controllers</groupId>
-	<artifactId>controller-parent</artifactId>
+	<artifactId>controller-web-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<!-- sub modules -->
 	<modules>
-		<module>controller_definitions</module>
-		<module>web</module>
+		<module>joycontrol-web</module>
 	</modules>
 </project>
