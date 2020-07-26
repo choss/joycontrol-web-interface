@@ -8,11 +8,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.text.StringSubstitutor;
+import org.insanedevelopment.controllers.definitions.common.scripting.ResourceFinder;
+import org.insanedevelopment.controllers.definitions.nsw.actions.NswSequenceAction;
+import org.insanedevelopment.controllers.definitions.nsw.scripting.NswScriptScanner;
 import org.insanedevelopment.controllers.joycontrolweb.api.script.ScriptFile;
 import org.insanedevelopment.controllers.joycontrolweb.api.script.ScriptMetadata;
 import org.insanedevelopment.controllers.joycontrolweb.api.script.ScriptType;
@@ -35,6 +40,9 @@ public class ScriptManagementService {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+
+	@Autowired
+	private ResourceFinder resourceFinder;
 
 	private List<ScriptFile> scripts = new ArrayList<>();
 	private Map<String, ScriptFile> idToScript = new HashMap<>();
@@ -85,6 +93,17 @@ public class ScriptManagementService {
 				.append(a.getTitle(), b.getTitle())
 				.append(a.getFileName(), b.getFileName())
 				.build().intValue();
+	}
+
+	public NswSequenceAction createExecutableScript(String scriptId, String reconnectAddress, String spiFileName, String nfcFileName) {
+		String scriptContent = idToScript.get(scriptId).getScriptContents();
+		Map<String, String> variableMap = Map.of("switch_mac", Objects.toString(reconnectAddress),
+				"spi_firm", Objects.toString(spiFileName),
+				"nfc_file", Objects.toString(nfcFileName));
+
+		String templatedScript = StringSubstitutor.replace(scriptContent, variableMap);
+		NswSequenceAction result = NswScriptScanner.parseScript(templatedScript, resourceFinder);
+		return result;
 	}
 
 }

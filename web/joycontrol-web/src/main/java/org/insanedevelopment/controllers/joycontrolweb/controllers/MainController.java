@@ -1,9 +1,8 @@
 package org.insanedevelopment.controllers.joycontrolweb.controllers;
 
-import org.insanedevelopment.controllers.definitions.nsw.connections.SwitchControllerType;
 import org.insanedevelopment.controllers.joycontrolweb.api.script.ScriptType;
 import org.insanedevelopment.controllers.joycontrolweb.service.main.MainApplicationStateService;
-import org.insanedevelopment.controllers.joycontrolweb.service.rest.JoyControlRestClient;
+import org.insanedevelopment.controllers.joycontrolweb.service.main.ResourceManagementService;
 import org.insanedevelopment.controllers.joycontrolweb.service.script.ScriptManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +17,11 @@ import reactor.core.publisher.Mono;
 public class MainController {
 
 	@Autowired
-	private JoyControlRestClient client;
-	@Autowired
 	private MainApplicationStateService mainService;
 	@Autowired
 	private ScriptManagementService scriptService;
+	@Autowired
+	private ResourceManagementService resourceManagementService;
 
 	@RequestMapping("/")
 	public Mono<String> index(final Model model) {
@@ -30,6 +29,7 @@ public class MainController {
 		model.addAttribute("state", mainService.getApplicationState());
 		model.addAttribute("quick_scripts", scripts);
 		model.addAttribute("all_macs", mainService.getAllKnownMacs());
+		model.addAttribute("all_spis", resourceManagementService.getAllSpi());
 		return Mono.just("index");
 	}
 
@@ -39,16 +39,21 @@ public class MainController {
 		return Mono.just("redirect:/");
 	}
 
-	@RequestMapping("/test")
-	public Mono<String> connect(final Model model) {
-		var result = client.connectReactive(SwitchControllerType.PRO_CONTROLLER, "EC:C4:0D:4B:B4:B2", null);
-		model.addAttribute("greeting", result);
-		return Mono.just("test");
+	@RequestMapping("/settings/update_spi")
+	public Mono<String> updateSPI(@RequestParam("spi_file") String mac) {
+		mainService.setSpiFile(mac);
+		return Mono.just("redirect:/");
 	}
 
-	@RequestMapping("/test2")
-	public String disconnect(final Model model) {
-		client.disconnect();
-		return "test";
+	@RequestMapping("/script/start")
+	public Mono<String> startScript(@RequestParam("id") String scriptId) {
+		mainService.runScriptInBackground(scriptId);
+		return Mono.just("redirect:/");
+	}
+
+	@RequestMapping("/script/stop")
+	public Mono<String> stopScript() {
+		mainService.stopRunningScript();
+		return Mono.just("redirect:/");
 	}
 }

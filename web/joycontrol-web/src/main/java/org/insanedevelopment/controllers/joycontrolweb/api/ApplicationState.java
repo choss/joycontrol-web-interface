@@ -10,13 +10,16 @@ public class ApplicationState {
 	private boolean scriptActive;
 	private String nfcFileName;
 	private String firmwareFileName;
+	private String runningScriptId;
 
-	public ApplicationState(ControllerStatus controllerStatus, String reconnectAddress, boolean isScriptRunning, String nfcFileName, String firmwareFileName) {
+	public ApplicationState(ControllerStatus controllerStatus, String reconnectAddress, boolean isScriptRunning, String nfcFileName, String firmwareFileName,
+			String runningScriptId) {
 		this.controllerStatus = controllerStatus;
 		this.reconnectAddress = reconnectAddress;
 		scriptActive = isScriptRunning;
 		this.nfcFileName = nfcFileName;
 		this.firmwareFileName = firmwareFileName;
+		this.runningScriptId = runningScriptId;
 	}
 
 	public ControllerStatus getControllerStatus() {
@@ -49,6 +52,10 @@ public class ApplicationState {
 
 	public Boolean getNfcActive() {
 		return controllerStatus.getNfcActive();
+	}
+
+	public String getRunningScriptId() {
+		return runningScriptId;
 	}
 
 }

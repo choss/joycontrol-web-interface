@@ -1,5 +1,6 @@
 package org.insanedevelopment.controllers.joycontrolweb.service.rest;
 
+import org.apache.commons.codec.binary.Base64;
 import org.insanedevelopment.controllers.definitions.nsw.connections.SwitchControllerConnection;
 import org.insanedevelopment.controllers.definitions.nsw.connections.SwitchControllerType;
 import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchButtons;
@@ -43,22 +44,13 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 
 	@Override
 	public String connect(SwitchControllerType type, String reconnectAddress, byte[] firmware) {
-		String controllerType = type.name();
-		String spiFirmware = null;
-		ConnectRequest cr = new ConnectRequest(controllerType, reconnectAddress, spiFirmware);
-		var result = webClient.post()
-				.uri("/controller/connect")
-				.bodyValue(cr)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.toEntity(ControllerStatus.class);
-		result.subscribe(a -> System.out.println(a.getBody()));
-		return "a";
+		var result = connectReactive(type, reconnectAddress, firmware);
+		return result.block();
 	}
 
 	public Mono<String> connectReactive(SwitchControllerType type, String reconnectAddress, byte[] firmware) {
 		String controllerType = type.name();
-		String spiFirmware = null;
+		String spiFirmware = convertBase64(firmware);
 		ConnectRequest cr = new ConnectRequest(controllerType, reconnectAddress, spiFirmware);
 		var result = webClient.post()
 				.uri("/controller/connect")
@@ -69,13 +61,18 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 		return result.map(cs -> cs.getPeer());
 	}
 
+	// That is a ridiculous method, too laze to change it now
+	private String convertBase64(byte[] source) {
+		return Base64.encodeBase64String(source);
+	}
+
 	@Override
 	public void disconnect() {
 		webClient.get().uri("/controller/disconnect")
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe(a -> System.out.println(a));
+				.subscribe();
 	}
 
 	public Mono<ControllerStatus> getStatusReactive() {
@@ -95,6 +92,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 
 	@Override
 	public void setButtonState(SwitchButtons button, boolean buttonState) {
+		System.out.println(button + " " + buttonState);
 		// TODO Auto-generated method stub
 
 	}

@@ -1,0 +1,19 @@
+# Meta: { "type":"quick_access", "requirements":["MAC", "FIRM", "NFC"], "title":"Demo", "order":100000 }
+NSW-START
+# setup - go back to game
+BUTTON_TAP DPAD_DOWN 300 300
+BUTTON_TAP DPAD_DOWN 300 300
+
+# actual loop
+LOOP 500
+BUTTON_TAP A 300 1000
+END
+
+# go back to controller config
+BUTTON_TAP HOME 300 300
+BUTTON_TAP DPAD_DOWN 300 300
+BUTTON_TAP DPAD_RIGHT 300 300
+BUTTON_TAP DPAD_RIGHT 300 300
+BUTTON_TAP DPAD_RIGHT 300 300
+BUTTON_TAP A 300 1500
+BUTTON_TAP A 300 4000
