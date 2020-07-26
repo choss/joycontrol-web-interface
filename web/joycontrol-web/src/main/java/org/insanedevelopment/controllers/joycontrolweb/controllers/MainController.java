@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 
 import reactor.core.publisher.Mono;
@@ -28,7 +29,14 @@ public class MainController {
 		var scripts = new ReactiveDataDriverContextVariable(scriptService.getScriptsOfType(ScriptType.QUICK_ACCESS));
 		model.addAttribute("state", mainService.getApplicationState());
 		model.addAttribute("quick_scripts", scripts);
+		model.addAttribute("all_macs", mainService.getAllKnownMacs());
 		return Mono.just("index");
+	}
+
+	@RequestMapping("/settings/update_mac")
+	public Mono<String> updateMac(@RequestParam("return_of_the_mac") String mac) {
+		mainService.setReconnectAddress(mac);
+		return Mono.just("redirect:/");
 	}
 
 	@RequestMapping("/test")

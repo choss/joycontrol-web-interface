@@ -10,6 +10,7 @@ import org.insanedevelopment.controllers.definitions.common.scripting.ResourceFi
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswButtonChangeStateAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswButtonTapAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswConnectAction;
+import org.insanedevelopment.controllers.definitions.nsw.actions.NswDisconnectAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswLoopAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswSequenceAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswSetStickAxisAction;
@@ -27,7 +28,8 @@ public enum SwitchCommandParser {
 	LOOP((sc, fd) -> new NswLoopAction(sc.nextLong(), createSequence(sc, fd, "END"))),
 	STICK((sc, fd) -> new NswSetStickAxisAction(SwitchSticks.valueOf(sc.next()), SwitchSticksAxis.valueOf(sc.next()), sc.nextInt())),
 	CONNECT((sc, fd) -> new NswConnectAction(SwitchControllerType.valueOf(sc.next()), nullable(sc.next()),
-			fd.getResourceBytes("CONNECT", nullable(sc.next()))));
+			fd.getResourceBytes("CONNECT", nullable(sc.next())))),
+	DISCONNECT((sc, fd) -> new NswDisconnectAction());
 
 	private BiFunction<Scanner, ResourceFinder, AbstractAction<SwitchControllerConnection, SwitchSticks, SwitchSticksAxis, SwitchButtons>> creationFunction;
 

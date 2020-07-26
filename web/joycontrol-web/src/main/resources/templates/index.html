@@ -23,6 +23,9 @@
 								th:src="${state.nfcActive}? '/webjars/mdi\_\_svg/svg/nfc-variant.svg' : '/webjars/mdi\_\_svg/svg/nfc-variant-off.svg'"> <img
 								th:src="${state.scriptActive}? '/webjars/mdi\_\_svg/svg/ghost.svg' : '/webjars/mdi\_\_svg/svg/ghost-off.svg'"></td>
 							<td th:text="${state.peer}"></td>
+							<td th:text="${state.reconnectAddress}"></td>
+							<td th:text="${state.firmwareFileName}"></td>
+							<td th:text="${state.nfcFileName}"></td>
 						<tr>
 					</tbody>
 				</table>
@@ -30,9 +33,42 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
-				<a th:each="script: ${quick_scripts}" th:text="${script.title}" type="button" class="btn btn-outline-primary mr-2" th:href="@{/script/start(id=${script.id})}">Primary</a>
+				<a th:each="script: ${quick_scripts}" th:text="${script.title}" type="button" class="btn btn-outline-primary mr-2"
+					th:href="@{/script/start(id=${script.id})}">Primary</a>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-12">
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="nav-item"><a class="nav-link active" id="scripts-tab" data-toggle="tab" href="#scripts" role="tab" aria-controls="scripts"
+						aria-selected="true">Scripts</a></li>
+					<li class="nav-item"><a class="nav-link" id="amiibo-tab" data-toggle="tab" href="#amiibo" role="tab" aria-controls="amiibo" aria-selected="false">Amiibo</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
+						aria-selected="false">Settings</a></li>
+				</ul>
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">h...</div>
+					<div class="tab-pane fade" id="amiibo" role="tabpanel" aria-labelledby="amiibo-tab">p...</div>
+					<div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+						<form method="get" action="/settings/update_mac">
+							<div class="form-group row mt-2">
+								<label for="colMacLabel" class="col-sm-2 col-form-label">Reconnect Addresses</label>
+								<div class="col-sm-6">
+									<select class="custom-select" id="colMacLabel" name="return_of_the_mac">
+										<option value="">None</option>
+										<option th:each="mac: ${all_macs}" th:value="${mac.key}" th:text="${mac.value}">One</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary mr-2">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

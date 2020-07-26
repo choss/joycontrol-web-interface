@@ -44,8 +44,12 @@ public class ScriptManagementService {
 	}
 
 	@PostConstruct
-	public void readScriptsToCache() throws IOException {
+	public void refreshCaches() throws IOException {
 		objectMapper.enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS);
+		reloadScripts();
+	}
+
+	private void reloadScripts() throws IOException {
 		var path = new File(scriptDir).getCanonicalPath();
 
 		var resolver = new PathMatchingResourcePatternResolver();
