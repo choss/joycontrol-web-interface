@@ -151,4 +151,9 @@ public class MainApplicationStateService {
 		saveData();
 	}
 
+	public void setNfcFile(String nfcFile) {
+		nfcFileName = StringUtils.trimToNull(nfcFile);
+		saveData();
+	}
+
 }

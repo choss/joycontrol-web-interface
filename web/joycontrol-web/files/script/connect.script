@@ -1,3 +1,3 @@
-# Meta:  { "type":"quick_access", "requirements":["FIRM"], "title":"Connect to Switch", "order":1 }
+# Meta:  { "type":"normal", "requirements":["FIRM"], "title":"Connect to Switch", "order":1 }
 NSW-START
 CONNECT PRO_CONTROLLER ${switch_mac} ${spi_firm}

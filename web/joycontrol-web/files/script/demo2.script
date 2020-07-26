@@ -1,4 +1,4 @@
-# Meta: { "type":"quick_access", "requirements":["MAC", "FIRM", "NFC"], "title":"Demo", "order":100000 }
+# Meta: { "type":"normal", "requirements":["MAC", "FIRM", "NFC"], "title":"Demo2", "order":100000 }
 NSW-START
 # setup - go back to game
 BUTTON_TAP DPAD_DOWN 300 300

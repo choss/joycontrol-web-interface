@@ -28,8 +28,10 @@ public class MainController {
 		var scripts = new ReactiveDataDriverContextVariable(scriptService.getScriptsOfType(ScriptType.QUICK_ACCESS));
 		model.addAttribute("state", mainService.getApplicationState());
 		model.addAttribute("quick_scripts", scripts);
+		model.addAttribute("normal_scripts", scriptService.getScriptsOfType(ScriptType.NORMAL));
 		model.addAttribute("all_macs", mainService.getAllKnownMacs());
 		model.addAttribute("all_spis", resourceManagementService.getAllSpi());
+		model.addAttribute("all_nfcs", resourceManagementService.getAllAmiibo());
 		return Mono.just("index");
 	}
 
@@ -42,6 +44,12 @@ public class MainController {
 	@RequestMapping("/settings/update_spi")
 	public Mono<String> updateSPI(@RequestParam("spi_file") String mac) {
 		mainService.setSpiFile(mac);
+		return Mono.just("redirect:/");
+	}
+
+	@RequestMapping("/settings/update_nfc")
+	public Mono<String> updateNfc(@RequestParam("nfc_file") String mac) {
+		mainService.setNfcFile(mac);
 		return Mono.just("redirect:/");
 	}
 

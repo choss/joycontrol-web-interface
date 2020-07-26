@@ -32,7 +32,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-3">
+			<div class="col-2">
 				<a class="btn btn-outline-secondary" th:href="@{/script/stop}" role="button">Abort script</a>
 			</div>
 			<div class="col-1">
@@ -49,16 +49,12 @@
 			<div class="col-12">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item"><a class="nav-link active" id="scripts-tab" data-toggle="tab" href="#scripts" role="tab" aria-controls="scripts"
-						aria-selected="true">Scripts</a></li>
+						aria-selected="true">Settings &amp; Scripts</a></li>
 					<li class="nav-item"><a class="nav-link" id="amiibo-tab" data-toggle="tab" href="#amiibo" role="tab" aria-controls="amiibo" aria-selected="false">Amiibo</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
-						aria-selected="false">Settings</a></li>
 				</ul>
 				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">h...</div>
-					<div class="tab-pane fade" id="amiibo" role="tabpanel" aria-labelledby="amiibo-tab">p...</div>
-					<div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+					<div class="tab-pane fade show active" id="scripts" role="tabpanel" aria-labelledby="scripts-tab">
 						<form method="get" action="/settings/update_mac">
 							<div class="form-group row mt-2">
 								<label for="colMacLabel" class="col-sm-2 col-form-label">Reconnect Addresses</label>
@@ -83,7 +79,32 @@
 								<button type="submit" class="btn btn-primary mr-2">Submit</button>
 							</div>
 						</form>
+						<form method="get" action="/settings/update_nfc">
+							<div class="form-group row mt-2">
+								<label for="colNfcLabel" class="col-sm-2 col-form-label">Amiibo</label>
+								<div class="col-sm-6">
+									<select class="custom-select" id="colNfcLabel" name="nfc_file">
+										<option value="">None</option>
+										<option th:each="nfc: ${all_nfcs}" th:value="${nfc}" th:text="${nfc}">One</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary mr-2">Submit</button>
+							</div>
+						</form>
+						<form method="get" action="/script/start">
+							<div class="form-group row mt-2">
+								<label for="colPSLabel" class="col-sm-2 col-form-label">Execute script</label>
+								<div class="col-sm-6">
+									<select class="custom-select" id="colPSLabel" name="id">
+										<option value="">None</option>
+										<option th:each="script: ${normal_scripts}" th:value="${script.id}" th:text="${script.title}">One</option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary mr-2">Submit</button>
+							</div>
+						</form>
 					</div>
+					<div class="tab-pane fade" id="amiibo" role="tabpanel" aria-labelledby="amiibo-tab">p...</div>
 				</div>
 			</div>
 		</div>
