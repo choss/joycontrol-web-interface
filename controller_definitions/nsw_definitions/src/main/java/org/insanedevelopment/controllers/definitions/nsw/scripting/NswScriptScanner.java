@@ -12,6 +12,10 @@ public class NswScriptScanner {
 	public static NswSequenceAction parseScript(String script, ResourceFinder rf) {
 		try (Scanner sc = new Scanner(script)) {
 			var startToken = sc.next();
+			while ("#".equals(startToken)) {
+				sc.nextLine();
+				startToken = sc.next();
+			}
 			if (!"NSW-START".equalsIgnoreCase(startToken)) {
 				throw new RuntimeException("Script needs to start with NSW-START ");
 			}
@@ -30,9 +34,10 @@ public class NswScriptScanner {
 			}
 		});
 		System.out.println(ReflectionToStringBuilder.reflectionToString(r, new MultilineRecursiveToStringStyle()));
+		System.out.println(ACNH_SCRIPT);
 	}
 
-	private static String ACNH_SCRIPT = "NSW-START\r\n" +
+	private static String ACNH_SCRIPT = "# Test\nNSW-START\r\n" +
 			"CONNECT PRO_CONTROLLER ${switch_mac} spi.firm\r\n" +
 			"# setup - go back to game\r\n" +
 			"BUTTON_TAP DPAD_DOWN 300 300\r\n" +

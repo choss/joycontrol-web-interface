@@ -4,10 +4,33 @@
 </head>
 <body>
 	<div class="container">
-		<h1>Configuration</h1>
+		<h1>Controller Main Page</h1>
 		<div class="row">
 			<div class="col-12">
-				<span th:text="${greeting}"></span>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Status</th>
+							<th>Peer Address</th>
+							<th>Reconnect Address</th>
+							<th>Firm</th>
+							<th>Amiibo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><img th:src="${state.connected}? '/webjars/mdi\_\_svg/svg/bluetooth-connect.svg' : '/webjars/mdi\_\_svg/svg/bluetooth-off.svg'"> <img
+								th:src="${state.nfcActive}? '/webjars/mdi\_\_svg/svg/nfc-variant.svg' : '/webjars/mdi\_\_svg/svg/nfc-variant-off.svg'"> <img
+								th:src="${state.scriptActive}? '/webjars/mdi\_\_svg/svg/ghost.svg' : '/webjars/mdi\_\_svg/svg/ghost-off.svg'"></td>
+							<td th:text="${state.peer}"></td>
+						<tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<a th:each="script: ${quick_scripts}" th:text="${script.title}" type="button" class="btn btn-outline-primary mr-2" th:href="@{/script/start(id=${script.id})}">Primary</a>
 			</div>
 		</div>
 	</div>

@@ -78,6 +78,15 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.subscribe(a -> System.out.println(a));
 	}
 
+	public Mono<ControllerStatus> getStatusReactive() {
+		var r = webClient.get()
+				.uri("/controller/status")
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ControllerStatus.class);
+		return r;
+	}
+
 	@Override
 	public void setStickAxis(SwitchSticks stick, SwitchSticksAxis axis, int axisValue) {
 		// TODO Auto-generated method stub
