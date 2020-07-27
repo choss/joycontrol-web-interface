@@ -1,5 +1,8 @@
 package org.insanedevelopment.controllers.joycontrolweb.service.rest;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import org.apache.commons.codec.binary.Base64;
 import org.insanedevelopment.controllers.definitions.nsw.connections.SwitchControllerConnection;
 import org.insanedevelopment.controllers.definitions.nsw.connections.SwitchControllerType;
@@ -15,31 +18,65 @@ import reactor.core.publisher.Mono;
 @Service
 public class JoyControlRestClient implements SwitchControllerConnection {
 
+	private Map<SwitchButtons, String> buttonsToApi = new EnumMap<>(SwitchButtons.class);
+	private Map<SwitchSticks, String> sticksToApi = new EnumMap<>(SwitchSticks.class);
+	private Map<SwitchSticksAxis, String> stickAxisToApi = new EnumMap<>(SwitchSticksAxis.class);
+
 	private WebClient webClient;
 
 	public JoyControlRestClient() {
 		webClient = WebClient.create("http://switch-controller-emulator:8000/");
-	}
 
-	// @Override
-	// public void sendAxisState(StickAxis axis, int axisValue) {
-	// int value = axisValue * 4;
-	// webClient.patchForObject("/controller/stick/{stick}/{axis}/{value}",
-	// null, ControllerStatus.class, "l_stick", axis, value);
-	// }
-	//
-	// @Override
-	// public void sendButtonState(GamepadButton button, boolean buttonState) {
-	// String buttonName = button.getSwitchButtonName();
-	// String action = buttonState ? "press" : "release";
-	// webClient.patchForObject("/controller/button/{action}/{button_name}",
-	// null, ControllerStatus.class, action, buttonName);
-	// }
+		buttonsToApi.put(SwitchButtons.Y, "y");
+		buttonsToApi.put(SwitchButtons.X, "x");
+		buttonsToApi.put(SwitchButtons.B, "b");
+		buttonsToApi.put(SwitchButtons.A, "a");
+		buttonsToApi.put(SwitchButtons.R, "r");
+		buttonsToApi.put(SwitchButtons.ZR, "zr");
+		buttonsToApi.put(SwitchButtons.MINUS, "minus");
+		buttonsToApi.put(SwitchButtons.PLUS, "plus");
+		buttonsToApi.put(SwitchButtons.RIGHT_STICK, "r_stick");
+		buttonsToApi.put(SwitchButtons.LEFT_STICK, "l_stick");
+		buttonsToApi.put(SwitchButtons.HOME, "home");
+		buttonsToApi.put(SwitchButtons.CAPTURE, "capture");
+		buttonsToApi.put(SwitchButtons.DPAD_DOWN, "down");
+		buttonsToApi.put(SwitchButtons.DPAD_UP, "up");
+		buttonsToApi.put(SwitchButtons.DPAD_RIGHT, "right");
+		buttonsToApi.put(SwitchButtons.DPAD_LEFT, "left");
+		buttonsToApi.put(SwitchButtons.L, "l");
+		buttonsToApi.put(SwitchButtons.ZL, "zl");
+		buttonsToApi.put(SwitchButtons.SR, "sr");
+		buttonsToApi.put(SwitchButtons.SL, "sl");
+
+		sticksToApi.put(SwitchSticks.LEFT_STICK, "l_stick");
+		sticksToApi.put(SwitchSticks.RIGHT_STICK, "r_stick");
+
+		stickAxisToApi.put(SwitchSticksAxis.X_AXIS, "x_axis");
+		stickAxisToApi.put(SwitchSticksAxis.Y_AXIS, "y_axis");
+
+	}
 
 	@Override
 	public void sendNfcData(byte[] nfcData) {
-		// TODO Auto-generated method stub
+		var nfcString = convertBase64(nfcData);
+		var request = new NfcRequest(nfcString);
+		webClient.post()
+				.uri("/controller/nfc")
+				.bodyValue(request)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ControllerStatus.class)
+				.subscribe();
+	}
 
+	@Override
+	public void removeNfcData() {
+		webClient.delete()
+				.uri("/controller/nfc")
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ControllerStatus.class)
+				.subscribe();
 	}
 
 	@Override
@@ -61,14 +98,15 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 		return result.map(cs -> cs.getPeer());
 	}
 
-	// That is a ridiculous method, too laze to change it now
+	// That is a ridiculous method, too lazy to change it now
 	private String convertBase64(byte[] source) {
 		return Base64.encodeBase64String(source);
 	}
 
 	@Override
 	public void disconnect() {
-		webClient.get().uri("/controller/disconnect")
+		webClient.get()
+				.uri("/controller/disconnect")
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
@@ -86,15 +124,28 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 
 	@Override
 	public void setStickAxis(SwitchSticks stick, SwitchSticksAxis axis, int axisValue) {
-		// TODO Auto-generated method stub
-
+		String stickApiString = sticksToApi.get(stick);
+		String axisApiString = stickAxisToApi.get(axis);
+		int value = axisValue * 4;
+		webClient.patch()
+				.uri("/controller/stick/{stick}/{axis}/{value}", stickApiString, axisApiString, value)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ControllerStatus.class)
+				.subscribe();
 	}
 
 	@Override
 	public void setButtonState(SwitchButtons button, boolean buttonState) {
+		String buttonName = buttonsToApi.get(button);
+		String action = buttonState ? "press" : "release";
 		System.out.println(button + " " + buttonState);
-		// TODO Auto-generated method stub
-
+		webClient.patch()
+				.uri("/controller/button/{action}/{button_name}", action, buttonName)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ControllerStatus.class)
+				.subscribe();
 	}
 
 }

@@ -12,6 +12,8 @@ import org.insanedevelopment.controllers.definitions.nsw.actions.NswButtonTapAct
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswConnectAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswDisconnectAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswLoopAction;
+import org.insanedevelopment.controllers.definitions.nsw.actions.NswNfcStartAction;
+import org.insanedevelopment.controllers.definitions.nsw.actions.NswNfcStopAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswSequenceAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswSetStickAxisAction;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswSleepAction;
@@ -27,6 +29,8 @@ public enum SwitchCommandParser {
 	BUTTON_TAP((sc, fd) -> new NswButtonTapAction(SwitchButtons.valueOf(sc.next().toUpperCase()), sc.nextLong(), sc.nextLong())),
 	LOOP((sc, fd) -> new NswLoopAction(sc.nextLong(), createSequence(sc, fd, "END"))),
 	STICK((sc, fd) -> new NswSetStickAxisAction(SwitchSticks.valueOf(sc.next()), SwitchSticksAxis.valueOf(sc.next()), sc.nextInt())),
+	NFC_SEND((sc, fd) -> new NswNfcStartAction(fd.getResourceBytes("NFC", nullable(sc.next())))),
+	NFC_REMOVE((sc, fd) -> new NswNfcStopAction()),
 	CONNECT((sc, fd) -> new NswConnectAction(SwitchControllerType.valueOf(sc.next()), nullable(sc.next()),
 			fd.getResourceBytes("CONNECT", nullable(sc.next())))),
 	DISCONNECT((sc, fd) -> new NswDisconnectAction());

@@ -9,11 +9,11 @@ import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchButtons;
 import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchSticks;
 import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchSticksAxis;
 
-public class NswNfcAction extends AbstractAction<SwitchControllerConnection, SwitchSticks, SwitchSticksAxis, SwitchButtons> {
+public class NswNfcStartAction extends AbstractAction<SwitchControllerConnection, SwitchSticks, SwitchSticksAxis, SwitchButtons> {
 
 	private byte[] nfcData;
 
-	public NswNfcAction(byte[] nfcData) {
+	public NswNfcStartAction(byte[] nfcData) {
 		this.nfcData = nfcData;
 	}
 

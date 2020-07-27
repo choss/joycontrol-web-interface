@@ -9,6 +9,8 @@ public interface SwitchControllerConnection extends ControllerConnection<SwitchS
 
 	void sendNfcData(byte[] nfcData);
 
+	void removeNfcData();
+
 	String connect(SwitchControllerType type, String reconnectAddress, byte[] firmware);
 
 	void disconnect();
