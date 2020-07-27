@@ -1,9 +1,13 @@
 package org.insanedevelopment.controllers.joycontrolweb.controllers;
 
+import java.io.IOException;
+
 import org.insanedevelopment.controllers.joycontrolweb.api.script.ScriptType;
 import org.insanedevelopment.controllers.joycontrolweb.service.main.MainApplicationStateService;
 import org.insanedevelopment.controllers.joycontrolweb.service.main.ResourceManagementService;
 import org.insanedevelopment.controllers.joycontrolweb.service.script.ScriptManagementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,8 @@ import reactor.core.publisher.Mono;
 
 @Controller
 public class MainController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
 	@Autowired
 	private MainApplicationStateService mainService;
@@ -64,4 +70,17 @@ public class MainController {
 		mainService.stopRunningScript();
 		return Mono.just("redirect:/");
 	}
+
+	@RequestMapping("/app/refresh")
+	public Mono<String> refreshCaches() {
+		try {
+			mainService.refreshCaches();
+			scriptService.refreshCaches();
+			resourceManagementService.refreshCaches();
+		} catch (IOException iox) {
+			LOGGER.error("Error refreshing caches", iox);
+		}
+		return Mono.just("redirect:/");
+	}
+
 }

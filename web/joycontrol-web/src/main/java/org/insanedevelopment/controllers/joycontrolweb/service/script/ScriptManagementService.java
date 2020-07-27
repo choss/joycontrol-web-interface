@@ -58,6 +58,8 @@ public class ScriptManagementService {
 	}
 
 	private void reloadScripts() throws IOException {
+		scripts.clear();
+		idToScript.clear();
 		var path = new File(scriptDir).getCanonicalPath();
 
 		var resolver = new PathMatchingResourcePatternResolver();

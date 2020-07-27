@@ -67,8 +67,12 @@ public class MainApplicationStateService {
 	}
 
 	@PostConstruct
-	public void refreshCaches() throws IOException {
+	public void init() throws IOException {
 		loadLastData();
+		refreshCaches();
+	}
+
+	public void refreshCaches() throws IOException {
 		reloadMacs();
 	}
 
