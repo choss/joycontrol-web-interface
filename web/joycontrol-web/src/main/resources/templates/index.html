@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/webjars/bootstrap-select/css/bootstrap-select.min.css">
 </head>
 <body>
 	<div class="container">
@@ -83,7 +84,7 @@
 							<div class="form-group row mt-2">
 								<label for="colNfcLabel" class="col-sm-2 col-form-label">Amiibo</label>
 								<div class="col-sm-6">
-									<select class="custom-select" id="colNfcLabel" name="nfc_file">
+									<select class="selectpicker form-control" data-style="custom-select" data-live-search="true" id="colNfcLabel" name="nfc_file">
 										<option value="">None</option>
 										<option th:each="nfc: ${all_nfcs}" th:value="${nfc}" th:text="${nfc}">One</option>
 									</select>
@@ -96,7 +97,6 @@
 								<label for="colPSLabel" class="col-sm-2 col-form-label">Execute script</label>
 								<div class="col-sm-6">
 									<select class="custom-select" id="colPSLabel" name="id">
-										<option value="">None</option>
 										<option th:each="script: ${normal_scripts}" th:value="${script.id}" th:text="${script.title}">One</option>
 									</select>
 								</div>
@@ -110,6 +110,8 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/popper.js/umd/popper.min.js"></script>
 	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap-select/js/bootstrap-select.min.js"></script>
 </body>
 </html>
