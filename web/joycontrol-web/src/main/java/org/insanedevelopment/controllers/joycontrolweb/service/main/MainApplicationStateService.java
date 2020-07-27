@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.apache.commons.lang3.tuple.Pair;
 import org.insanedevelopment.controllers.definitions.nsw.actions.NswSequenceAction;
 import org.insanedevelopment.controllers.joycontrolweb.api.ApplicationState;
@@ -36,7 +37,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class MainApplicationStateService {
 
-	private static final ExecutorService BACKGROUND_EXECUTOR = Executors.newSingleThreadExecutor();
+	private static final ExecutorService BACKGROUND_EXECUTOR = Executors.newSingleThreadExecutor(new BasicThreadFactory.Builder().daemon(true).build());
 	private static final Logger LOGGER = LoggerFactory.getLogger(MainApplicationStateService.class);
 
 	@Autowired

@@ -9,6 +9,7 @@ import org.insanedevelopment.controllers.definitions.nsw.connections.SwitchContr
 import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchButtons;
 import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchSticks;
 import org.insanedevelopment.controllers.definitions.nsw.gamepad.SwitchSticksAxis;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,8 +25,8 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 
 	private WebClient webClient;
 
-	public JoyControlRestClient() {
-		webClient = WebClient.create("http://switch-controller-emulator:8000/");
+	public JoyControlRestClient(@Value("${joycontrol.rest.url}") String baseUrl) {
+		webClient = WebClient.create(baseUrl);
 
 		buttonsToApi.put(SwitchButtons.Y, "y");
 		buttonsToApi.put(SwitchButtons.X, "x");
@@ -139,7 +140,6 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 	public void setButtonState(SwitchButtons button, boolean buttonState) {
 		String buttonName = buttonsToApi.get(button);
 		String action = buttonState ? "press" : "release";
-		System.out.println(button + " " + buttonState);
 		webClient.patch()
 				.uri("/controller/button/{action}/{button_name}", action, buttonName)
 				.accept(MediaType.APPLICATION_JSON)
