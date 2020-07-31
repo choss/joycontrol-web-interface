@@ -27,6 +27,7 @@ public class SetStickAxisAction<CC extends ControllerConnection<Stick, Axis, But
 
 	@Override
 	public void visit(CC consumer) {
+		log.debug("Setting axis state {} {} {}", stick, axis, value);
 		consumer.setStickAxis(stick, axis, value);
 	}
 

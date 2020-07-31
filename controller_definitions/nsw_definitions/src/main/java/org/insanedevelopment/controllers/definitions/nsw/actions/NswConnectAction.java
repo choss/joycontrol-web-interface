@@ -24,6 +24,7 @@ public class NswConnectAction extends AbstractAction<SwitchControllerConnection,
 
 	@Override
 	public void visit(SwitchControllerConnection consumer) {
+		log.debug("Connecting to switch {} {}", type, reconnectAddress);
 		consumer.connect(type, reconnectAddress, firmware);
 	}
 

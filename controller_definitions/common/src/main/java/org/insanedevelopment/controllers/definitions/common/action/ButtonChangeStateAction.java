@@ -24,6 +24,7 @@ public class ButtonChangeStateAction<CC extends ControllerConnection<Stick, Axis
 
 	@Override
 	public void visit(CC consumer) {
+		log.debug("Setting button state {} {}", button, state);
 		consumer.setButtonState(button, state);
 	}
 

@@ -9,9 +9,9 @@ import org.insanedevelopment.controllers.definitions.common.connections.Controll
 public class ButtonTapAction<CC extends ControllerConnection<Stick, Axis, Button>, Stick extends Enum<?>, Axis extends Enum<?>, Button extends Enum<?>>
 		extends AbstractAction<CC, Stick, Axis, Button> {
 
-	private Button button;
-	private long pressDurationInMs;
-	private long delayAfterInMs;
+	protected Button button;
+	protected long pressDurationInMs;
+	protected long delayAfterInMs;
 
 	public ButtonTapAction(Button button, long pressDurationInMs, long delayAfterInMs) {
 		Validate.notNull(button);
@@ -22,13 +22,14 @@ public class ButtonTapAction<CC extends ControllerConnection<Stick, Axis, Button
 
 	@Override
 	public void visit(CC consumer) {
+		log.debug("Tapping button state {} {} {}", button, pressDurationInMs, delayAfterInMs);
 		consumer.setButtonState(button, true);
 		sleep(pressDurationInMs);
 		consumer.setButtonState(button, false);
 		sleep(delayAfterInMs);
 	}
 
-	private void sleep(long durationInMs) {
+	protected void sleep(long durationInMs) {
 		try {
 			Thread.sleep(durationInMs);
 		} catch (InterruptedException e) {

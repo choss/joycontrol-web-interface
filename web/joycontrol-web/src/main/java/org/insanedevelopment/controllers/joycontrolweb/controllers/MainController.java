@@ -71,6 +71,12 @@ public class MainController {
 		return Mono.just("redirect:/");
 	}
 
+	@RequestMapping("/script/kill")
+	public Mono<String> killScript() {
+		mainService.killRunningScript();
+		return Mono.just("redirect:/");
+	}
+
 	@RequestMapping("/app/refresh")
 	public Mono<String> refreshCaches() {
 		try {

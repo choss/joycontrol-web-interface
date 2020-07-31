@@ -12,4 +12,15 @@ public class NswButtonTapAction extends ButtonTapAction<SwitchControllerConnecti
 		super(button, pressDurationInMs, delayAfterInMs);
 	}
 
+	@Override
+	public void visit(SwitchControllerConnection consumer) {
+		if (pressDurationInMs == 300) {
+			log.debug("Tapping button with API {} {}", button, delayAfterInMs);
+			consumer.tapButton(button);
+			sleep(delayAfterInMs);
+		} else {
+			super.visit(consumer);
+		}
+	}
+
 }

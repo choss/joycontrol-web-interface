@@ -148,4 +148,15 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.subscribe();
 	}
 
+	@Override
+	public void tapButton(SwitchButtons button) {
+		String buttonName = buttonsToApi.get(button);
+		webClient.patch()
+				.uri("/controller/button/tap/{button_name}", buttonName)
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(ControllerStatus.class)
+				.subscribe();
+	}
+
 }

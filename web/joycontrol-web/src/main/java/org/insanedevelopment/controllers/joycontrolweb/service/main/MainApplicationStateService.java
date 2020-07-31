@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.annotation.PostConstruct;
 
@@ -55,7 +56,8 @@ public class MainApplicationStateService {
 	private String nfcFileName;
 	private String spiFileName;
 
-	private Pair<String, NswSequenceAction> runningScript;
+	private volatile Pair<String, NswSequenceAction> runningScript;
+	private volatile Future<?> runningScriptFuture;
 
 	public Mono<ApplicationState> getApplicationState() {
 		Mono<ControllerStatus> controllerState = restClient.getStatusReactive();
@@ -131,7 +133,7 @@ public class MainApplicationStateService {
 			return;
 		}
 		NswSequenceAction script = scriptService.createExecutableScript(scriptId, reconnectAddress, spiFileName, nfcFileName);
-		BACKGROUND_EXECUTOR.submit(() -> runScript(scriptId, script));
+		runningScriptFuture = BACKGROUND_EXECUTOR.submit(() -> runScript(scriptId, script));
 	}
 
 	private void runScript(String scriptId, NswSequenceAction script) {
@@ -159,6 +161,10 @@ public class MainApplicationStateService {
 	public void setNfcFile(String nfcFile) {
 		nfcFileName = StringUtils.trimToNull(nfcFile);
 		saveData();
+	}
+
+	public void killRunningScript() {
+		runningScriptFuture.cancel(true);
 	}
 
 }

@@ -20,6 +20,7 @@ public class SleepAction<CC extends ControllerConnection<Stick, Axis, Button>, S
 
 	@Override
 	public void visit(CC consumer) {
+		log.debug("Sleeping {}", duration);
 		try {
 			Thread.sleep(duration);
 		} catch (InterruptedException e) {

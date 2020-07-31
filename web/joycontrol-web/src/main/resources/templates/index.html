@@ -34,10 +34,13 @@
 		</div>
 		<div class="row">
 			<div class="col-2">
-				<a class="btn btn-outline-secondary" th:href="@{/script/stop}" role="button">Abort script</a>
+				<a class="btn btn-outline-secondary" th:href="@{/script/stop}" role="button">Stop script</a>
 			</div>
-			<div class="col-1">
+			<div class="col-4">
 				<span th:text="${state.runningScriptId}"></span>
+			</div>
+			<div class="col-2">
+				<a class="btn btn-outline-danger" th:href="@{/script/kill}" role="button">Kill script</a>
 			</div>
 		</div>
 		<div class="row mt-3">
@@ -107,7 +110,7 @@
 					<div class="tab-pane fade" id="advanced" role="tabpanel" aria-labelledby="advanced-tab">
 						<div class="row">
 							<div class="col-12">
-								<a class="btn btn-outline-danger mt-2" th:href="@{/app/refresh}" role="button">Refresh caches</a>
+								<a class="btn btn-outline-danger mt-2" th:href="@{/app/refresh}" role="button">Reload config</a>
 							</div>
 						</div>
 					</div>

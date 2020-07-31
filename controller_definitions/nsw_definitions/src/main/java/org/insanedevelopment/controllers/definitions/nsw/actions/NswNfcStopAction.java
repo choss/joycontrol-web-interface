@@ -16,6 +16,7 @@ public class NswNfcStopAction extends AbstractAction<SwitchControllerConnection,
 
 	@Override
 	public void visit(SwitchControllerConnection consumer) {
+		log.debug("Removing nfc data");
 		consumer.removeNfcData();
 	}
 

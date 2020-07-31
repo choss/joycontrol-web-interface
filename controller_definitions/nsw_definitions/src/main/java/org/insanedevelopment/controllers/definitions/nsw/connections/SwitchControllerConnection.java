@@ -15,4 +15,6 @@ public interface SwitchControllerConnection extends ControllerConnection<SwitchS
 
 	void disconnect();
 
+	void tapButton(SwitchButtons button);
+
 }

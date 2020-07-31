@@ -16,6 +16,7 @@ public class NswDisconnectAction extends AbstractAction<SwitchControllerConnecti
 
 	@Override
 	public void visit(SwitchControllerConnection consumer) {
+		log.debug("Disconnecting from switch");
 		consumer.disconnect();
 	}
 
