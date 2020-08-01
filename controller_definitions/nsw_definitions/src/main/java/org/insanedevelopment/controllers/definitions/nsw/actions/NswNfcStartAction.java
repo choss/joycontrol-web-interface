@@ -19,7 +19,7 @@ public class NswNfcStartAction extends AbstractAction<SwitchControllerConnection
 
 	@Override
 	public void visit(SwitchControllerConnection consumer) {
-		log.debug("Setting nfc data");
+		log.debug("Sending nfc data {}", nfcData.toString());
 		consumer.sendNfcData(nfcData);
 	}
 

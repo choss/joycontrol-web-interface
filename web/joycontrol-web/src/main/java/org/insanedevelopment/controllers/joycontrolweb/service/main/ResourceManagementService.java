@@ -46,7 +46,7 @@ public class ResourceManagementService implements ResourceFinder {
 		}
 
 		if ("NFC".equals(commandName)) {
-			var resource = allFirmwares.get(resourceName);
+			var resource = allAmiibos.get(resourceName);
 			if (resource == null) {
 				return null;
 			}
@@ -82,7 +82,7 @@ public class ResourceManagementService implements ResourceFinder {
 		Map<String, Resource> result = new HashMap<>(resources.length * 2);
 
 		for (Resource resource : resources) {
-			result.put(resource.getFilename(), resource);
+			result.put(resource.getFilename().replace(' ', '_'), resource);
 		}
 
 		return result;

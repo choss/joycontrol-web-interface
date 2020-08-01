@@ -67,7 +67,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe();
+				.block();
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe();
+				.block();
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe();
+				.block();
 	}
 
 	public Mono<ControllerStatus> getStatusReactive() {
@@ -133,7 +133,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe();
+				.block();
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe();
+				.block();
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class JoyControlRestClient implements SwitchControllerConnection {
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(ControllerStatus.class)
-				.subscribe();
+				.block();
 	}
 
 }

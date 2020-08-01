@@ -1,4 +1,4 @@
-# Meta: { "type":"quick_access", "requirements":["MAC", "FIRM", "NFC"], "title":"Animal Crossing A Button", "order":110 }
+# Meta: { "type":"quick_access", "requirements":["MAC", "FIRM", "NFC"], "title":"Animal Crossing Amiibo Harv", "order":10 }
 NSW-START
 CONNECT PRO_CONTROLLER ${switch_mac} ${spi_firm}
 SLEEP 3000
@@ -25,10 +25,12 @@ BUTTON_TAP DPAD_LEFT 300 500
 BUTTON_TAP DPAD_UP 300 500
 BUTTON_TAP A 300 500
 
-# actual loop
-LOOP 500
-BUTTON_TAP A 300 300
-END
+# send amiibo
+BUTTON_TAP DPAD_DOWN 300 2000
+NFC_SEND ${nfc_file}
+SLEEP 5000
+NFC_REMOVE
+
 
 # go back to controller config
 BUTTON_TAP HOME 300 300

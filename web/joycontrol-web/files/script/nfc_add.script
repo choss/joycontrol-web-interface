@@ -1,0 +1,3 @@
+# send amiibo
+NSW-START
+NFC_SEND ${nfc_file}

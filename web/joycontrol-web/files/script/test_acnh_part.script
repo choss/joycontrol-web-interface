@@ -1,4 +1,4 @@
-# Meta: { "type":"quick_access", "requirements":["MAC", "FIRM", "NFC"], "title":"Animal Crossing Test", "order":30 }
+# Meta: { "type":"normal", "requirements":["MAC", "FIRM", "NFC"], "title":"Animal Crossing Test", "order":30 }
 NSW-START
 # Here is the grip/change order menu
 DISCONNECT
@@ -6,7 +6,7 @@ SLEEP 3000
 CONNECT PRO_CONTROLLER ${switch_mac} ${spi_firm}
 SLEEP 28000
 
-BUTTON_TAP A 500 6000
+BUTTON_TAP A 1500 8000
 BUTTON_TAP B 300 2000
 BUTTON_TAP DPAD_LEFT 300 500
 BUTTON_TAP DPAD_LEFT 300 500

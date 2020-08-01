@@ -22,9 +22,10 @@ public class ButtonTapAction<CC extends ControllerConnection<Stick, Axis, Button
 
 	@Override
 	public void visit(CC consumer) {
-		log.debug("Tapping button state {} {} {}", button, pressDurationInMs, delayAfterInMs);
+		log.debug("Tapping button state (press event) {} {} {}", button, pressDurationInMs, delayAfterInMs);
 		consumer.setButtonState(button, true);
 		sleep(pressDurationInMs);
+		log.debug("Tapping button state (release event) {} {} {}", button, pressDurationInMs, delayAfterInMs);
 		consumer.setButtonState(button, false);
 		sleep(delayAfterInMs);
 	}

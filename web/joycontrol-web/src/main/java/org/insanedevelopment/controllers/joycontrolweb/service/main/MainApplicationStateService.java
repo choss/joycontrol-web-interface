@@ -108,7 +108,8 @@ public class MainApplicationStateService {
 
 	private void reloadMacs() throws IOException {
 		var path = new File(dataDir).getCanonicalPath();
-		var configLines = IOUtils.readLines(new FileSystemResourceLoader().getResource(path + "/switch_macs.csv").getInputStream(),
+		LOGGER.info("Using data dir: {}", path);
+		var configLines = IOUtils.readLines(new FileSystemResourceLoader().getResource("file:" + dataDir + "/switch_macs.csv").getInputStream(),
 				StandardCharsets.UTF_8);
 		List<Pair<String, String>> allKnownMacs = new ArrayList<>(configLines.size() + 2);
 		for (String line : configLines) {
