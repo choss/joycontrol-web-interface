@@ -34,5 +34,10 @@ build/
 .vscode/
 .files
 
-files/*
+files/data/*
+files/nfc/*
+files/spi/*
 !files/script
+!files/data/README.md
+!files/nfc/README.md
+!files/spi/README.md
