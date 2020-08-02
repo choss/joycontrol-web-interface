@@ -51,7 +51,7 @@ public enum SwitchCommandParser {
 	}
 
 	private static boolean convertUpDown(String next) {
-		if ("hold".equalsIgnoreCase(next)) {
+		if ("hold".equalsIgnoreCase(next) || "down".equalsIgnoreCase(next)) {
 			return true;
 		}
 		return false;
