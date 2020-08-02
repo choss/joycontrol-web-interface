@@ -2,7 +2,7 @@
 
 This repository contains a work-in-progress java web-interface for the [joycontrol rest API](https://github.com/choss/joycontrol_rest_api).
 
-![screenshot](/doc/webclient.png?raw=true)
+![screenshot](doc/webclient.png?raw=true)
 
 # Introduction
 
