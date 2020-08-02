@@ -16,7 +16,6 @@ The code is in MVP (minimal viable product) state. There are no proper validatio
   - all sticks
   - nfc read functionality (e.g. ACNH, BOTW)
   - works on a raspberry pi zero W with the azul java 11
-
 - dynamic creation of buttons for quick access to scripts
 - every action is a script!
 
@@ -28,5 +27,5 @@ The code is in MVP (minimal viable product) state. There are no proper validatio
 # Configuration/Execution
 - edit the application.properties with the location of your rest api endpoint
 - java -jar \<filename\>
-- open in browser: http://<ip>:8080
+- open in browser: http://\<ip\>:8080
   
