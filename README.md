@@ -23,9 +23,11 @@ The code is in MVP (minimal viable product) state. There are no proper validatio
 - joycontrol
 - joycontrol_rest_api
 - java 11
+- Working Apache Maven installation
 
 # Configuration/Execution
 - edit the application.properties with the location of your rest api endpoint
-- java -jar \<filename\>
+- compile the application with maven ( mvn clean package -Dmaven.test.skip=true )
+- java -jar \<filename\>  (e.g. java -jar web\joycontrol-web\target\joycontrol-web-0.0.1-SNAPSHOT.jar )
 - open in browser: http://\<ip\>:8080
   
