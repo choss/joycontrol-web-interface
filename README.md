@@ -28,6 +28,7 @@ The code is in MVP (minimal viable product) state. There are no proper validatio
 # Configuration/Execution
 - edit the application.properties with the location of your rest api endpoint
 - compile the application with maven ( mvn clean package -Dmaven.test.skip=true )
+- ensure copy the folder web/joycontrol-web/files to your local folder and create all needed sub files (see readmes)
 - java -jar \<filename\>  (e.g. java -jar web\joycontrol-web\target\joycontrol-web-0.0.1-SNAPSHOT.jar )
 - open in browser: http://\<ip\>:8080
   
